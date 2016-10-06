@@ -30,7 +30,7 @@ public class interactiveWaves : MonoBehaviour
         verticalDerivative = new float[xRes, yRes];
         kernel = new float[P+1, P+1];
         zeroSource();
-        calculateKernel();
+        kernel = calculateKernel();
         GameObject obj = GameObject.Find("waterPlane");
         water = obj.GetComponent<Water>();
 
@@ -59,7 +59,7 @@ public class interactiveWaves : MonoBehaviour
         }
     }
 
-    void zeroSource()
+    public void zeroSource()
     {
         for (int i = 0; i < xRes; i++)
         {
@@ -72,8 +72,9 @@ public class interactiveWaves : MonoBehaviour
 
     void updateHeightMap()
     {
-        updateSource();
+        
         convolveVerticalDerivative();
+        updateSource();
         float temp;
         for (int i = 0; i < xRes; i++)
         {
@@ -99,7 +100,7 @@ public class interactiveWaves : MonoBehaviour
                 float temp = 0;
                 for (int k = 0; k < P+1; k++)
                 {
-                    for (int l = k+1; l < P + 1; l++)
+                    for (int l = 0; l < P + 1; l++)
                     {
                         if ((i + k) < xRes && (i - k) > 0 && (j + l) < xRes && (j - l) > 0)
                         {
